@@ -4,7 +4,11 @@ class Router
 {
   protected $routes = [
     "GET" => [
-      // 'about' => 'PagesController  @home';
+      //laravel 7
+      // 'about' => 'PagesController@home',
+
+      // laravel 8
+      // 'about' => [controllers\PagesController, about],
     ],
     "POST" => [],
   ];
@@ -31,24 +35,20 @@ class Router
     $this->routes['POST'][$uri] = $controller;
     return $this;
   }
-
-  public function data(Array $dataArr)
-  {
-    dd($dataArr);
-    return $dataArr;
-  }
-
+ 
   public function direct($uri, $method)
   {
     if (array_key_exists($uri, $this->routes[$method])) {
-      $desire = explode("@", $this->routes[$method][$uri]);      
+      // $desire = explode("@", $this->routes[$method][$uri]);
+      $desire = $this->routes[$method][$uri]; // got the routers
       // return $this->routes[$method][$uri]; // controllers/... is returned here.
       $this->goTo($desire[0], $desire[1]);
-    }
+    }    
+    
     else
     {
       die("404 page");
-    }
+    }    
   }
 
   public function goTo($class, $method)
